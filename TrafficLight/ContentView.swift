@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var redLight = 1.5
-    @State var yellowLight = 1.5
-    @State var greenLight = 1.5
-    @State private var currentLight = CurrentLight.red
+    @State var redLight = false
+    @State var yellowLight = false
+    @State var greenLight = false
+    @State var currentLight = CurrentLight.red
     @State var buttonTitle = "START"
     @State var buttonIsHidden = false
+    @State var buttonIsDisable = true
     
     var body: some View {
         ZStack {
@@ -27,19 +28,16 @@ struct ContentView: View {
                     
                     switch currentLight {
                     case .red:
-                        redLight = 1.5
-                        yellowLight = 0.3
-                        greenLight = 0.3
+                        redLight = false
+                        greenLight = true
                         currentLight = .yellow
                     case .yellow:
-                        redLight = 0.3
-                        yellowLight = 1.5
-                        greenLight = 0.3
+                        redLight = true
+                        yellowLight = false
                         currentLight = .green
                     case .green:
-                        redLight = 0.3
-                        yellowLight = 0.3
-                        greenLight = 1.5
+                        yellowLight = true
+                        greenLight = false
                         currentLight = .red
                     }
                 }, label: {
@@ -51,22 +49,24 @@ struct ContentView: View {
                         .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                         .overlay(Capsule(style: .continuous).stroke(lineWidth: 3).foregroundColor(.white))
                 })
+                .disabled(buttonIsDisable)
                 .opacity(buttonIsHidden ? 1:0)
             }.padding()
         }
         .onAppear() {
             withAnimation(Animation.easeIn.delay(0.5)) {
-                redLight = 0.3
+                redLight = true
             }
             withAnimation(Animation.easeIn.delay(1.5)) {
-                yellowLight = 0.3
+                yellowLight = true
             }
             withAnimation(Animation.easeIn.delay(2.5)) {
-                greenLight = 0.3
+                greenLight = true
             }
             withAnimation(Animation.easeIn(duration: 0.5).delay(3.5)) {
                 buttonIsHidden = true
             }
+            delayButtonIsActive()
         }
     }
 }
@@ -74,5 +74,13 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+    }
+}
+
+extension ContentView {
+    private func delayButtonIsActive() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+            buttonIsDisable = false
+        }
     }
 }

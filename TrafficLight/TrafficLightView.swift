@@ -8,26 +8,26 @@
 import SwiftUI
 
 struct TrafficLightView: View {
-    let redLight: Double
-    let yellowLight: Double
-    let greenLight: Double
+    let redLight: Bool
+    let yellowLight: Bool
+    let greenLight: Bool
     
     var body: some View {
         VStack{
             Circle()
-                .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/)
+                .frame(width: 150, height: 150)
                 .foregroundColor(.red)
-                .contrast(redLight)
+                .contrast(redLight ? 0.3:1.5)
                 .overlay(Capsule(style: .circular).stroke(lineWidth: 3).foregroundColor(.white))
             Circle()
-                .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/)
+                .frame(width: 150, height: 150)
                 .foregroundColor(.yellow)
-                .contrast(yellowLight)
+                .contrast(yellowLight ? 0.3:1.5)
                 .overlay(Capsule(style: .circular).stroke(lineWidth: 3).foregroundColor(.white))
             Circle()
-                .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/)
+                .frame(width: 150, height: 150)
                 .foregroundColor(.green)
-                .contrast(greenLight)
+                .contrast(greenLight ? 0.3:1.5)
                 .overlay(Capsule(style: .circular).stroke(lineWidth: 3).foregroundColor(.white))
         }
     }
@@ -35,6 +35,6 @@ struct TrafficLightView: View {
 
 struct TrafficLightView_Previews: PreviewProvider {
     static var previews: some View {
-        TrafficLightView(redLight: 0.5, yellowLight: 0.5, greenLight: 0.5)
+        TrafficLightView(redLight: false, yellowLight: false, greenLight: false)
     }
 }
